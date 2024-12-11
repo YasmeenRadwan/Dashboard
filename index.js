@@ -14,6 +14,7 @@ app.use(express.json())
 
 
 app.use('/about',router.aboutRouter);
+app.use('/service',router.serviceRouter);
 app.use(globalResponse);
 
 connectionDB()

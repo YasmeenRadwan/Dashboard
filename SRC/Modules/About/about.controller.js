@@ -31,7 +31,7 @@ export const createAbout = async(req, res, next) => {
       folder: `${process.env.UPLOADS_FOLDER}/About/${customId}`,
     });
 
-    // Update the `image` field and save to the database
+    // Update the image field and save to the database
     newAbout.image = { secure_url, public_id };
 
     // Save to the database
@@ -43,22 +43,19 @@ export const createAbout = async(req, res, next) => {
         date: newAbout.created});
 }
 
-// get about
+////////////////////////////// get about///////////////////////////////////////
 export const getAbout = async(req, res, next) => {
-    const {id,desc} = req.query;
-    const queryFilter = {};
-    if(id) queryFilter._id=id;
-    if(desc) queryFilter.desc=desc;
-    const about = await About.findOne(queryFilter);
+    const {_id} = req.params;
+    const about = await About.findById(_id);
     if(!about){
-        return next(new errorHandlerClass(`about not found`,404,`about not found`));
+        return next(new errorHandlerClass('about not found',404,'about not found'));
     }
     res.json({
         status: "success",
         data: about
     })
 }
-// update about
+//////////////////////////// update about/////////////////////////////////
 export const updateAbout = async(req, res , next) => { 
     //console.log(req.file);
     const {_id}= req.params ;
@@ -66,7 +63,7 @@ export const updateAbout = async(req, res , next) => {
     console.log("about",about);
     
     if(!about){
-        return next(new errorHandlerClass(`about not found`,404,`about not found`));
+        return next(new errorHandlerClass('about not found',404,'about not found'));
     }
     const {desc , public_id} = req.body ;
     if(desc){
@@ -99,7 +96,7 @@ export const updateAbout = async(req, res , next) => {
       });
     };
 
-// delete about
+////////////////////////////delete about//////////////////////////
 export const deleteAbout = async(req,res,next) =>{
   const {_id} = req.params;
   const about = await About.findByIdAndDelete(_id);

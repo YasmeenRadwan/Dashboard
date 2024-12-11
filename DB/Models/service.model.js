@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 const {Schema , model} = mongoose;
 
-const aboutSchema = new Schema ({
-    desc : {
+const serviceSchema = new Schema ({
+    name : {
         type : String,
-        required : [true, "Desc is required"],
+        required : [true, "service name is required"],
         unique : true,
         lowercase : true,
+        minlength : [2, "must be at least 2 characters long"],
+        maxlength : [15, "must not be more than 15 characters long"]
+    },
+    desc : {
+        type : String,
         minlength : [10, "must be at least 10 characters long"],
         maxlength : [600, "must not be more than 600 characters long"]
     },
@@ -30,4 +35,4 @@ const aboutSchema = new Schema ({
 },
 {timeStamps : true})
 
-export const About = mongoose.model.About || model("About" ,aboutSchema);
+export const Service = mongoose.model.Service || model("Service" ,serviceSchema);
