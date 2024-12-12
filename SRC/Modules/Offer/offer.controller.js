@@ -13,16 +13,14 @@ export const createOffer = async(req, res, next) => {
     if (!req.file) {
         return next(new errorHandlerClass('Please upload an Image.',400,'Please upload an Image.'));
     }
-    const customId=nanoid(4);
     
     const { secure_url, public_id } = await cloudinaryConfig().uploader.upload(req.file.path, {
-      folder: `${process.env.UPLOADS_FOLDER}/Offer/${customId}`,
+      folder: `${process.env.UPLOADS_FOLDER}/Offers`,
     });
 
     //prepare offer object
     const newOffer = new Offer({
       image: { secure_url, public_id},
-      customId,
       categoryId :category._id,
     });
 
@@ -32,7 +30,10 @@ export const createOffer = async(req, res, next) => {
     res.status(200).json({
         status : "success",
         message : "offer created successfully",
-        data: newOffer._id});
+        data: {
+          id: newOffer._id,
+          secure_url: newOffer.image.secure_url,
+      },});
 }
 
 ////////////////////////////// get offer///////////////////////////////////////
@@ -69,33 +70,36 @@ export const updateOffer = async(req, res , next) => {
     if(!offer){
         return next(new errorHandlerClass('offer not found',404,'offer not found'));
     }
-    const {public_id} = req.body ;
 
     if (req.file) {
-      console.log("img",offer.image);
-      
-        const splitedPublicId = offer.image.public_id.split(
-          `${offer.customId}/`
-        )[1];
-    
-        const { secure_url } = await cloudinaryConfig().uploader.upload(
-          req.file.path,
-          {
-            folder: `${process.env.UPLOADS_FOLDER}/Offer/${offer.customId}`,
-            public_id: splitedPublicId,
-          }
-        );
-        console.log("imag",offer.image);
-        offer.image.secure_url = secure_url;
+      // Extract the current public_id for the image
+      const currentPublicId = offer.image.public_id;
+
+      // Delete the existing image from Cloudinary
+      if (currentPublicId) {
+          await cloudinaryConfig().uploader.destroy(currentPublicId);
       }
+
+      // Upload the new image to the shared folder
+      const { secure_url, public_id } = await cloudinaryConfig().uploader.upload(req.file.path, {
+          folder: `${process.env.UPLOADS_FOLDER}/Offers`, 
+      });
+
+      // Update the image properties in the offer
+      offer.image.secure_url = secure_url;
+      offer.image.public_id = public_id;
+  }
+
       // save the offer with the new changes
       await offer.save();
     
       res.status(200).json({
         status: "success",
         message: "offer updated successfully",
-        data: offer,
-      });
+        data: {
+          id: offer._id,
+          secure_url: offer.image.secure_url,
+      },});
     };
 
 ////////////////////////////delete offer//////////////////////////
@@ -106,9 +110,10 @@ export const deleteOffer = async(req,res,next) =>{
     return next(new errorHandlerClass(`offer not found`,404,`offer not found`));
   }
 
-  const offerPath=`${process.env.UPLOADS_FOLDER}/Offer/${offer.customId}`;
-  await cloudinaryConfig().api.delete_resources_by_prefix(offerPath);
-  await cloudinaryConfig().api.delete_folder(offerPath);
+  // Delete the specific image from Cloudinary
+  if (offer.image && offer.image.public_id) {
+  await cloudinaryConfig().uploader.destroy(offer.image.public_id);
+ }
 
   res.status(200).json({
     status: "success",

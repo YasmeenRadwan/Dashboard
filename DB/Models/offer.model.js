@@ -13,11 +13,6 @@ const offerSchema = new Schema ({
             unique : true
         }
     },
-    customId :{
-        type : String,
-        required : true,
-        unique : true
-    },
     categoryId:{
         type : Schema.Types.ObjectId,
         ref : 'Category'
