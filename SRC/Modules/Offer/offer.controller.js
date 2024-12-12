@@ -5,8 +5,8 @@ import {Offer} from "../../../DB/Models/offer.model.js";
 import {Category} from "../../../DB/Models/category.model.js";
 
 export const createOffer = async(req, res, next) => {
-
-    const category = await Category.findById(req.query.categoryId);
+    const { categoryId } = req.params;
+    const category = await Category.findById({categoryId});
     if (!category) {
         return next(new errorHandlerClass("Category not found.", 404, "Category not found."));
     }
@@ -80,17 +80,16 @@ export const updateOffer = async(req, res , next) => {
           await cloudinaryConfig().uploader.destroy(currentPublicId);
       }
 
-      // Upload the new image to the shared folder
+      // Upload the new image 
       const { secure_url, public_id } = await cloudinaryConfig().uploader.upload(req.file.path, {
           folder: `${process.env.UPLOADS_FOLDER}/Offers`, 
       });
 
-      // Update the image properties in the offer
+      // Update the image properties 
       offer.image.secure_url = secure_url;
       offer.image.public_id = public_id;
   }
-
-      // save the offer with the new changes
+      // save the offer 
       await offer.save();
     
       res.status(200).json({

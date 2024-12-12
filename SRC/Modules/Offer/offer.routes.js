@@ -6,7 +6,7 @@ import * as controller from "./offer.controller.js"
 const offerRouter = Router();
 
 
-offerRouter.post('/',multerHost({allowedExtensions : extensions.images}).single('image'),
+offerRouter.post('/categoryId',multerHost({allowedExtensions : extensions.images}).single('image'),
 errorHandle(controller.createOffer));
 
 offerRouter.get('/all' , errorHandle(controller.getAllOffers));
