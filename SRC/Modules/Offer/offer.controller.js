@@ -1,12 +1,11 @@
 import { errorHandlerClass } from "../../utils/error-class.utils.js";
 import {cloudinaryConfig} from "../../utils/cloudinary.utils.js"
-import {nanoid} from "nanoid";
 import {Offer} from "../../../DB/Models/offer.model.js";
 import {Category} from "../../../DB/Models/category.model.js";
 
 export const createOffer = async(req, res, next) => {
     const { categoryId } = req.params;
-    const category = await Category.findById({categoryId});
+    const category = await Category.findById(categoryId);
     if (!category) {
         return next(new errorHandlerClass("Category not found.", 404, "Category not found."));
     }
