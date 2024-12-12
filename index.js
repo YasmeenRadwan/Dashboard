@@ -5,7 +5,6 @@ import { config } from 'dotenv';
 import * as router from './SRC/Modules/index.js';
 import cors from 'cors'; 
 
-
 const app = express();
 
 config()
