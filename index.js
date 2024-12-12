@@ -9,7 +9,7 @@ const app = express();
 config()
 
 let port = process.env.PORT;
-
+app.use(cors());
 app.use(express.json())
 
 app.use('/about',router.aboutRouter);
