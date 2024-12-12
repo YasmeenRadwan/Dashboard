@@ -69,9 +69,7 @@ export const updateAbout = async(req, res , next) => {
     if(desc){
         about.desc = desc;
     }
-    if (req.file) {
-      console.log("img",about.image);
-      
+    if (req.file) {      
         const splitedPublicId = about.image.public_id.split(
           `${about.customId}/`
         )[1];

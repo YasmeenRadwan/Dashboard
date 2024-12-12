@@ -12,9 +12,13 @@ export const createOffer = async(req, res, next) => {
     if (!req.file) {
         return next(new errorHandlerClass('Please upload an Image.',400,'Please upload an Image.'));
     }
-    
+
+    const originalName = req.file.originalname.split('.').slice(0, -1).join('.');
+    const uniqueName = `${originalName}-${Date.now()}`;
+
     const { secure_url, public_id } = await cloudinaryConfig().uploader.upload(req.file.path, {
       folder: `${process.env.UPLOADS_FOLDER}/Offers`,
+      public_id: uniqueName,
     });
 
     //prepare offer object
@@ -61,7 +65,6 @@ export const getCategoryOffers = async(req, res, next) => {
 }
 //////////////////////////// update offer/////////////////////////////////
 export const updateOffer = async(req, res , next) => { 
-    //console.log(req.file);
     const {_id}= req.params ;
     const offer = await Offer.findById(_id);
     console.log("offer",offer);
@@ -71,7 +74,7 @@ export const updateOffer = async(req, res , next) => {
     }
 
     if (req.file) {
-      // Extract the current public_id for the image
+      // Extract the current public_id 
       const currentPublicId = offer.image.public_id;
 
       // Delete the existing image from Cloudinary
@@ -79,11 +82,14 @@ export const updateOffer = async(req, res , next) => {
           await cloudinaryConfig().uploader.destroy(currentPublicId);
       }
 
-      // Upload the new image 
+      const originalName = req.file.originalname.split('.').slice(0, -1).join('.');
+      const uniqueName = `${originalName}-${Date.now()}`;
+  
       const { secure_url, public_id } = await cloudinaryConfig().uploader.upload(req.file.path, {
-          folder: `${process.env.UPLOADS_FOLDER}/Offers`, 
+        folder: `${process.env.UPLOADS_FOLDER}/Offers`,
+        public_id: uniqueName,
       });
-
+  
       // Update the image properties 
       offer.image.secure_url = secure_url;
       offer.image.public_id = public_id;
