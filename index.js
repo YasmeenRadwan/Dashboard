@@ -3,6 +3,8 @@ import {connectionDB} from './DB/connection.js';
 import { globalResponse } from './SRC/Middleware/error-handle.middleware.js';
 import { config } from 'dotenv';
 import * as router from './SRC/Modules/index.js';
+import cors from 'cors'; 
+
 
 const app = express();
 
