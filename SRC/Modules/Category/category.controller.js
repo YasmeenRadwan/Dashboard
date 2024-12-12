@@ -15,7 +15,7 @@ export const createCategory = async(req, res, next) => {
     // Save to the database
     await newCategory.save();
   
-    res.status(201).json({
+    res.status(200).json({
         status : "success",
         message : "category created successfully",
         date: newCategory.created});
@@ -28,7 +28,7 @@ export const getCategory = async(req, res, next) => {
     if(!category){
         return next(new errorHandlerClass('category not found',404,'category not found'));
     }
-    res.json({
+    res.status(200).json({
         status: "success",
         data: category
     })
@@ -39,7 +39,7 @@ export const getallCategories = async(req, res, next) => {
   if(categories.length === 0){
       return next(new errorHandlerClass('No categories found',404,'No categories found'));
   }
-  res.json({
+  res.status(200).json({
       status: "success",
       data: categories
   })
@@ -76,7 +76,7 @@ export const deleteCategory = async(req,res,next) =>{
     return next(new errorHandlerClass('category not found',404,'category not found'));
   }
 
-  res.json({
+  res.status(200).json({
     status: "success",
     message: "category deleted successfully",
     data: category

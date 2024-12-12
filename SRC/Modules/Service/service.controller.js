@@ -38,7 +38,7 @@ export const createService = async(req, res, next) => {
     // Save to the database
     await newService.save();
   
-    res.status(201).json({
+    res.status(200).json({
         status : "success",
         message : "service created successfully",
         date: newService.created});
@@ -54,7 +54,7 @@ export const getService = async(req, res, next) => {
     if(!service){
         return next(new errorHandlerClass('service not found',404,'service not found'));
     }
-    res.json({
+    res.status(200).json({
         status: "success",
         data: service
     })
@@ -66,7 +66,7 @@ export const getServices = async(req, res, next) => {
   if(services.length === 0){
       return next(new errorHandlerClass('No services found',404,'No services found'));
   }
-  res.json({
+  res.status(200).json({
       status: "success",
       data: services
   })
@@ -127,7 +127,7 @@ export const deleteService = async(req,res,next) =>{
   await cloudinaryConfig().api.delete_resources_by_prefix(servicePath);
   await cloudinaryConfig().api.delete_folder(servicePath);
 
-  res.json({
+  res.status(200).json({
     status: "success",
     message: "service deleted successfully",
     data: service

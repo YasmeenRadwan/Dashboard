@@ -29,7 +29,7 @@ export const createOffer = async(req, res, next) => {
     // Save to the database
     await newOffer.save();
   
-    res.status(201).json({
+    res.status(200).json({
         status : "success",
         message : "offer created successfully",
         date: newOffer.created});
@@ -41,7 +41,7 @@ export const getAllOffers = async(req, res, next) => {
     if(offers.length === 0){
         return next(new errorHandlerClass('offer not found',404,'offer not found'));
     }
-    res.json({
+    res.status(200).json({
         status: "success",
         data: offers
     })
@@ -54,7 +54,7 @@ export const getCategoryOffers = async(req, res, next) => {
   if(offers.length === 0){
       return next(new errorHandlerClass('No category for this offer',404,'No category for this offer'));
   }
-  res.json({
+  res.status(200).json({
       status: "success",
       data: offers
   })
@@ -110,7 +110,7 @@ export const deleteOffer = async(req,res,next) =>{
   await cloudinaryConfig().api.delete_resources_by_prefix(offerPath);
   await cloudinaryConfig().api.delete_folder(offerPath);
 
-  res.json({
+  res.status(200).json({
     status: "success",
     message: "offer deleted successfully",
     data: offer

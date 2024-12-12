@@ -37,7 +37,7 @@ export const createAbout = async(req, res, next) => {
     // Save to the database
     await newAbout.save();
   
-    res.status(201).json({
+    res.status(200).json({
         status : "success",
         message : "about created successfully",
         date: newAbout.created});
@@ -50,7 +50,7 @@ export const getAbout = async(req, res, next) => {
     if(!about){
         return next(new errorHandlerClass('about not found',404,'about not found'));
     }
-    res.json({
+    res.status(200).json({
         status: "success",
         data: about
     })
@@ -108,7 +108,7 @@ export const deleteAbout = async(req,res,next) =>{
   await cloudinaryConfig().api.delete_resources_by_prefix(aboutPath);
   await cloudinaryConfig().api.delete_folder(aboutPath);
 
-  res.json({
+  res.status(200).json({
     status: "success",
     message: "about deleted successfully",
     data: about
