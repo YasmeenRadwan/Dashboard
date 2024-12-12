@@ -18,7 +18,7 @@ export const createCategory = async(req, res, next) => {
     res.status(200).json({
         status : "success",
         message : "category created successfully",
-        date: newCategory.created});
+        data: newCategory._id});
 }
 
 ////////////////////////////// get category///////////////////////////////////////

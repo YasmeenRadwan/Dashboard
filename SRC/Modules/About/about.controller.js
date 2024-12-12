@@ -40,7 +40,7 @@ export const createAbout = async(req, res, next) => {
     res.status(200).json({
         status : "success",
         message : "about created successfully",
-        date: newAbout.created});
+        date: newAbout._id});
 }
 
 ////////////////////////////// get about///////////////////////////////////////

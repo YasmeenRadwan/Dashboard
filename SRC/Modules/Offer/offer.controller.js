@@ -32,7 +32,7 @@ export const createOffer = async(req, res, next) => {
     res.status(200).json({
         status : "success",
         message : "offer created successfully",
-        date: newOffer.created});
+        date: newOffer._id});
 }
 
 ////////////////////////////// get offer///////////////////////////////////////

@@ -41,7 +41,7 @@ export const createService = async(req, res, next) => {
     res.status(200).json({
         status : "success",
         message : "service created successfully",
-        date: newService.created});
+        date: newService._id});
 }
 
 ////////////////////////////// get service///////////////////////////////////////
