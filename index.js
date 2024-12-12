@@ -1,8 +1,8 @@
-import express from 'express'
-import {connectionDB} from './DB/connection.js'
-import { globalResponse } from './SRC/Middleware/error-handle.middleware.js'
+import express from 'express';
+import {connectionDB} from './DB/connection.js';
+import { globalResponse } from './SRC/Middleware/error-handle.middleware.js';
 import { config } from 'dotenv';
-import * as router from './SRC/Modules/index.js'
+import * as router from './SRC/Modules/index.js';
 
 const app = express();
 
@@ -12,9 +12,11 @@ let port = process.env.PORT;
 
 app.use(express.json())
 
-
 app.use('/about',router.aboutRouter);
 app.use('/service',router.serviceRouter);
+app.use('/category',router.categoryRouter);
+app.use('/offer',router.offerRouter);
+
 app.use(globalResponse);
 
 connectionDB()

@@ -63,7 +63,7 @@ export const getService = async(req, res, next) => {
 export const getServices = async(req, res, next) => {
  
   const services = await Service.find();
-  if(!services){
+  if(services.length === 0){
       return next(new errorHandlerClass('No services found',404,'No services found'));
   }
   res.json({
