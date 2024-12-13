@@ -54,6 +54,9 @@ export const getAllOffers = async(req, res, next) => {
 export const getCategoryOffers = async(req, res, next) => {
   const { categoryId } = req.params;
 
+  if (!categoryId) {
+    return next(new errorHandlerClass('Category ID is required', 400, 'Invalid input'));
+  }
   const offers = await Offer.find({categoryId});
   if(offers.length === 0){
       return next(new errorHandlerClass('No category for this offer',404,'No category for this offer'));

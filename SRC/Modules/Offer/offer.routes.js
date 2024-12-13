@@ -10,7 +10,7 @@ offerRouter.post('/:categoryId',multerHost({allowedExtensions : extensions.image
 errorHandle(controller.createOffer));
 
 offerRouter.get('/all' , errorHandle(controller.getAllOffers));
-offerRouter.get('/:categoryId' , errorHandle(controller.getAllOffers));
+offerRouter.get('/:categoryId' , errorHandle(controller.getCategoryOffers));
 
 offerRouter.patch('/:_id',multerHost({allowedExtensions : extensions.images}).single('image'), errorHandle(controller.updateOffer));
 offerRouter.delete('/:_id' , errorHandle(controller.deleteOffer));
