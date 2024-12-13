@@ -40,7 +40,9 @@ export const createAbout = async(req, res, next) => {
     res.status(200).json({
         status : "success",
         message : "about created successfully",
-        data: newAbout._id});
+        data: {
+          id: newAbout._id,
+          secure_url: newAbout.image.secure_url},});
 }
 
 ////////////////////////////// get about///////////////////////////////////////
@@ -90,7 +92,10 @@ export const updateAbout = async(req, res , next) => {
       res.status(200).json({
         status: "success",
         message: "about updated successfully",
-        data: about,
+        data: {
+          id: about._id,
+          secure_url: about.image.secure_url,
+      },
       });
     };
 
