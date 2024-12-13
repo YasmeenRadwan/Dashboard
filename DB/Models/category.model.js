@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const {Schema , model} = mongoose;
+import {Offer} from './index.js';
 
 const categorySchema = new Schema ({
     name : {
@@ -12,5 +13,15 @@ const categorySchema = new Schema ({
     },
 },
 {timeStamps : true})
+
+// delete related offers when a category is deleted
+categorySchema.pre("findOneAndDelete", async function (next) {
+const categoryId = this.getQuery()._id; // Extract the _id of the category being deleted
+
+// Delete all offers associated with this category
+await Offer.deleteMany({ categoryId });
+
+next();
+});
 
 export const Category = mongoose.model.Category || model("Category" ,categorySchema);
