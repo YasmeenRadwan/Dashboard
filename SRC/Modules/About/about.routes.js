@@ -10,7 +10,7 @@ const aboutRouter = Router();
 aboutRouter.post('/',multerHost({allowedExtensions : extensions.images}).single('image'),
 errorHandle(controller.createAbout));
 
-aboutRouter.get('/:_id' , errorHandle(controller.getAbout));
+aboutRouter.get('/' , errorHandle(controller.getAbout));
 aboutRouter.patch('/:_id',multerHost({allowedExtensions : extensions.images}).single('image'), errorHandle(controller.updateAbout));
 aboutRouter.delete('/:_id' , errorHandle(controller.deleteAbout));
 

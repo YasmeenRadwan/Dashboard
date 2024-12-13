@@ -47,8 +47,8 @@ export const createAbout = async(req, res, next) => {
 
 ////////////////////////////// get about///////////////////////////////////////
 export const getAbout = async(req, res, next) => {
-    const {_id} = req.params;
-    const about = await About.findById(_id);
+    //const {_id} = req.params;
+    const about = await About.find();
     if(!about){
         return next(new errorHandlerClass('about not found',404,'about not found'));
     }
