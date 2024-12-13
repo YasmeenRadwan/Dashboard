@@ -133,3 +133,39 @@ export const deleteService = async(req,res,next) =>{
     data: service
   })
 }
+
+////////////////////////////delete service//////////////////////////
+export const deleteAllServices = async (req, res, next) => {
+  try {
+    // Fetch all services 
+    const services = await Service.find();
+
+    if (services.length === 0) {
+      return res.status(200).json({
+        status: "success",
+        message: "No services found to delete",
+      });
+    }
+
+    // Iterate through each service to delete associated resources
+    for (const service of services) {
+      const servicePath = `${process.env.UPLOADS_FOLDER}/Service/${service.customId}`;
+
+      // Delete all resources in the folder
+      await cloudinaryConfig().api.delete_resources_by_prefix(servicePath);
+
+      // Delete the folder itself
+      await cloudinaryConfig().api.delete_folder(servicePath);
+    }
+
+    // Delete all services from the database
+    await Service.deleteMany();
+
+    res.status(200).json({
+      status: "success",
+      message: "All services and associated resources deleted successfully",
+    });
+  } catch (error) {
+    next(error); 
+  }
+};

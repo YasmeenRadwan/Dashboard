@@ -11,6 +11,7 @@ errorHandle(controller.createService));
 serviceRouter.get('/all' , errorHandle(controller.getServices));
 serviceRouter.get('/' , errorHandle(controller.getService));
 serviceRouter.patch('/:_id',multerHost({allowedExtensions : extensions.images}).single('image'), errorHandle(controller.updateService));
+serviceRouter.delete('/all' , errorHandle(controller.deleteAllServices));
 serviceRouter.delete('/:_id' , errorHandle(controller.deleteService));
 
 export {serviceRouter};
