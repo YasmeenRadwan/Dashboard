@@ -41,7 +41,10 @@ export const createService = async(req, res, next) => {
     res.status(200).json({
         status : "success",
         message : "service created successfully",
-        data: newService._id});
+        data: {
+          id: newService._id,
+          secure_url: newService.image.secure_url,
+      }});
 }
 
 ////////////////////////////// get service///////////////////////////////////////
@@ -111,7 +114,10 @@ export const updateService = async(req, res , next) => {
       res.status(200).json({
         status: "success",
         message: "service updated successfully",
-        data: service,
+        data: {
+          id: service._id,
+          secure_url: service.image.secure_url,
+      },
       });
     };
 
