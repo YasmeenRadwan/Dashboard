@@ -17,6 +17,7 @@ app.use('/about',router.aboutRouter);
 app.use('/service',router.serviceRouter);
 app.use('/category',router.categoryRouter);
 app.use('/offer',router.offerRouter);
+app.use('/user',router.userRouter);
 
 app.use(globalResponse);
 

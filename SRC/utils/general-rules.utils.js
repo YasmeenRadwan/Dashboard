@@ -12,5 +12,4 @@ export const generalRules = {
     objectId : Joi.string().custom(objectIdRule),
     //headers : Joi.object({})
 
-
 }
