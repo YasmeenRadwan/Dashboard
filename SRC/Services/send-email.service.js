@@ -23,7 +23,7 @@ export const sendEmailService = async ({
     const emailINfo =await transporter.sendMail({
         from: 'yasmeen radwan <engyradwan93@gmail.com>',
         to: to ? to :'',
-        subject: 'Test Email',
+        subject: 'Reset Password Email',
         text: textMessage,
         html: htmlMessage,
         attachments,
