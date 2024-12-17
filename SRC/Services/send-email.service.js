@@ -5,9 +5,9 @@ export const sendEmailService = async ({
     try {
         // transporter configuration
         const transporter = nodemailer.createTransport({
-            host: 'localhost',
-            port: 587, // 465 , 25
-            secure: false, // true for 465, false for other ports
+           // host: 'localhost',
+           // port: 587, // 465 , 25
+          //secure: false, // true for 465, false for other ports
             auth: {
                 user: 'Engyradwan93@gmail.com',
                 pass: 'qpeuhdzycqinjghe',
