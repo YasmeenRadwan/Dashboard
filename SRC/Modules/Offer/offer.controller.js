@@ -59,7 +59,7 @@ export const getCategoryOffers = async(req, res, next) => {
   }
   const offers = await Offer.find({categoryId});
   if(offers.length === 0){
-      return next(new errorHandlerClass('No category for this offer',404,'No category for this offer'));
+      return next(new errorHandlerClass('No offers for this Category',404,'No offers for this Category'));
   }
   res.status(200).json({
       status: "success",

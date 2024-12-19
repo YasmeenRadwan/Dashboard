@@ -3,9 +3,7 @@ import joi from 'joi';
 export const forgetPasswordSchema= {
     body : joi.object( {
         newPassword : joi.string().min(6).required().pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*])[A-Za-z\d@$!%*]{8,}$/),
-
-        email : joi.string().email({
-        tlds: { allow: ['com', 'net']}}).required().lowercase().messages({"any.required" : " You must enter Email "}),
+        email : joi.string().email().required().lowercase().messages({"any.required" : " You must enter Email "}),
         otp : joi.string().required()
         })
 }
