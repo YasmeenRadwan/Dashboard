@@ -87,7 +87,17 @@ export const otpPassword = async (req,res,next) => {
     }
      res.status(200).json({message:"OTP sent successfully"})
     }
+/////////////////////////////////////verifyOtp////////////////////////////////////
+export const verifyOtp = async (req, res, next) => {
+    const { email, otp } = req.body;
+        const user = await User.findOne({ email, otp, otpExpires: { $gt: Date.now() } });
+    
+        if (!user) {
+        return next(new errorHandlerClass("Invalid or expired OTP", 404, "Invalid or expired OTP"))
+        }
 
+        res.status(200).json({message:'OTP Verified Successfully'});
+    }
 /////////////////////////////////////forgetPassword////////////////////////////////////
     export const forgetPassword = async (req, res, next) => {
     const { email, otp,newPassword } = req.body;
